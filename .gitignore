@@ -1,3 +1,5 @@
-API/*
-FastAPI/*
 __pycache__
+*.pyc
+*.pyo
+API/.venv
+.env
