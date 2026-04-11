@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Simple installer: installs wireless tools and rockyou wordlist.
 # Usage: chmod +x install.sh && sudo ./install.sh
-REQ_PKGS=(iw aircrack-ng wireless-tools net-tools)
+REQ_PKGS=(iw aircrack-ng net-tools)
 
 # rockyou sources (tries in order)
 ROCKYOU_URLS=(

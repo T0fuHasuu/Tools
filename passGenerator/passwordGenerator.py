@@ -18,7 +18,7 @@ def randomizePass(length=16, require_classes=True):
         pwd.append(secrets.choice(upper))
         pwd.append(secrets.choice(digits))
         pwd.append(secrets.choice(symbols))
-    
+
     remaining = max(0, length - len(pwd))
     for _ in range(remaining):
         pwd.append(secrets.choice(all_chars))
@@ -29,7 +29,6 @@ def randomizePass(length=16, require_classes=True):
 def main():
     a = int(input("Enter Length : "))
     print(randomizePass(a))
-    
 
 if __name__ == '__main__':
     main()
