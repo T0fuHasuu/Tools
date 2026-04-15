@@ -2,20 +2,14 @@ package scanner
 
 import (
 	"errors"
+	"os"
 	"os/exec"
 	"runtime"
+	"fmt"
 )
 
-func PingGoogle() error {
-	var cmd *exec.Cmd
-
-	if runtime.GOOS == "windows" {
-		cmd = exec.Command("ping", "-n", "1", "google.com")
-	} else {
-		cmd = exec.Command("ping", "-c", "1", "google.com")
-	}
-
-	return cmd.Run()
+func CheckRoot() bool {
+	return os.Geteuid() == 0
 }
 
 func HasNmap() bool {
@@ -23,14 +17,36 @@ func HasNmap() bool {
 	return err == nil
 }
 
-func PrerequisitesOK() error {
-	if err := PingGoogle(); err != nil {
-		return errors.New("No Internet Connection !!!")
+func PingHost(host string) error {
+	var cmd *exec.Cmd
+	if runtime.GOOS == "windows" {
+		cmd = exec.Command("ping", "-n", "1", host)
+	} else {
+		cmd = exec.Command("ping", "-c", "1", host)
 	}
+	return cmd.Run()
+}
 
+func GetInput() string {
+	var target string
+	fmt.Print("Target (x.x.x.x): ")
+	fmt.Scanln(&target)
+
+	if target == "" {
+		return ""
+	}
+	return target
+}
+
+func PrerequisitesOK(target string) error {
+	if !CheckRoot() {
+		return errors.New("need root/admin privileges")
+	}
 	if !HasNmap() {
-		return errors.New("Nmap Is Not Installed !!!")
+		return errors.New("nmap is not installed")
 	}
-
+	if err := PingHost(target); err != nil {
+		return errors.New("target is unreachable")
+	}
 	return nil
 }
