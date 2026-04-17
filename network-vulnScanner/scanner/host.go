@@ -29,7 +29,7 @@ func PingHost(host string) error {
 
 func GetInput() string {
 	var target string
-	fmt.Print("Target (x.x.x.x): ")
+	fmt.Print("Target (x.x.x.x) : ")
 	fmt.Scanln(&target)
 
 	if target == "" {
