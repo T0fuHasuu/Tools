@@ -158,3 +158,50 @@ go run main.go
 ```
 
 If everything is set up correctly, your terminal will reach out across the internet, attempt a TCP handshake with the Nmap test server, and print a `[+] Success!` message.
+
+
+
+
+
+
+
+Nmap, enhanced by the Nmap Scripting Engine (NSE), is a powerful tool for identifying vulnerabilities. The following are five essential Nmap commands designed to discover vulnerabilities in an endpoint. 
+Important: Only run these scans against systems you have explicit permission to test. 
+1. General Vulnerability Scan (--script vuln) 
+This is the primary command for finding known vulnerabilities. It runs all pre-installed scripts in the vuln category, including checks for Heartbleed, EternalBlue, and Slowloris. 
+
+    Command: nmap -Pn -sV --script vuln <target>
+    Purpose: Comprehensive check for various CVEs and security flaws. 
+
+2. CVE Version Detection (--script vulners)
+This script matches discovered service versions against the Vulners database (a large live database of vulnerabilities). It requires internet access. 
+
+    Command: nmap -sV --script vulners <target>
+    Purpose: Identifies specific CVEs associated with the software versions running on the target. 
+
+3. Aggressive Enumeration Scan (-A) 
+This scan performs operating system detection, version detection, script scanning, and traceroute simultaneously. It is very noisy but provides a detailed picture of the target. 
+
+    Command: nmap -A -T4 <target>
+    Purpose: Rapidly gathers detailed service and OS information, which is crucial for identifying potential attack vectors. 
+
+4. Targeted SMB Vulnerability Scan (smb-vuln-*)
+This command specifically targets Windows endpoints to check for dangerous vulnerabilities like EternalBlue (MS17-010) and MS08-067. 
+
+    Command: nmap -p 445 --script smb-vuln-* <target>
+    Purpose: Checks for critical SMB vulnerabilities that allow remote code execution. 
+
+5. Web Application Vulnerability Scan (http-enum) 
+This command enumerates common directories, files, and web vulnerabilities, such as finding administrative consoles or backup files. 
+
+    Command: nmap -p 80,443 --script http-enum,http-headers,http-methods <target>
+    Purpose: Assesses the web application surface for configuration errors and known files. 
+
+Summary Table of Top Nmap Vulnerability Commands
+Purpose 	Command
+Full Vulnerability Check	nmap -sV --script vuln <target>
+CVE Matching	nmap -sV --script vulners <target>
+Aggressive Recon	nmap -A -T4 <target>
+Windows/SMB Vulns	nmap -p 445 --script smb-vuln-* <target>
+Web Enumeration	nmap -p80,443 --script http-enum <target>
+For more accurate results, ensure you use -sV (Version Detection) to allow scripts to contextually identify if a service is vulnerable. 

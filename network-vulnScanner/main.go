@@ -42,7 +42,7 @@ func menu(target string) {
 
 		switch input {
 		case "1":
-			fmt.Println("Running Tool A on:", target)
+			GeneralVuln(target)
 		case "2":
 			fmt.Println("Running Tool B on:", target)
 		case "q", "Q":
