@@ -32,8 +32,8 @@ func menu(target string) {
 	for {
 		clearScreen()
 		fmt.Println(Cyan + "[+] Menu" + Reset)
-		fmt.Println("1. Tool A")
-		fmt.Println("2. Tool B")
+		fmt.Println("1. General Vuln Scan")
+		fmt.Println("2. CVE Vuln Scan")
 		fmt.Println("q. Quit")
 		fmt.Print("> ")
 
@@ -42,9 +42,9 @@ func menu(target string) {
 
 		switch input {
 		case "1":
-			GeneralVuln(target)
+			scanner.GeneralVuln(target)
 		case "2":
-			fmt.Println("Running Tool B on:", target)
+			scanner.CVEScan(target)
 		case "q", "Q":
 			return
 		default:
